@@ -8,6 +8,9 @@ gdf = gpd.read_file("ne_10m_geography_regions_points/ne_10m_geography_regions_po
 gdf.to_file("ne_10m_geography_regions_points.json", driver="GeoJSON")
 
 
+gdf = gpd.read_file("ne_110m_geography_regions_polys/ne_110m_geography_regions_polys.shp")
+gdf.to_file("ne_110m_geography_regions_polys.geojson", driver="GeoJSON")
+
 
 file_path = "IHME-GBD_2021_DATA-6b23a41d-1.csv"
 df = pd.read_csv(file_path)
@@ -21,6 +24,7 @@ alt_rows["location_name"] = "Côte d’Ivoire"   # curly apostrophe
 
 alt_rows2 = ivory_rows.copy()
 alt_rows2["location_name"] = "Ivory Coast"   # English alias
+
 
 
 
