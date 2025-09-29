@@ -1,4 +1,13 @@
 import pandas as pd
+import geopandas as gpd
+
+# Load the shapefile (replace with your path)
+gdf = gpd.read_file("ne_10m_geography_regions_points/ne_10m_geography_regions_points.shp")
+
+# Export to GeoJSON
+gdf.to_file("ne_10m_geography_regions_points.json", driver="GeoJSON")
+
+
 
 file_path = "IHME-GBD_2021_DATA-6b23a41d-1.csv"
 df = pd.read_csv(file_path)
