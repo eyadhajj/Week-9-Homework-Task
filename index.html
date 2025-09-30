@@ -1,116 +1,159 @@
 <!DOCTYPE html>
-
+<!-- A quick template was generated, however it was heavily changed and was simply just used for the layout and structure. Everything else has been modified and/or changed to my own implementation and design. -->
 <head>
-    <meta charset="UTF-8">
-    <title>WWeek 9 - Homework Task - Death Rates Over the World</title>
-    <!-- Vega & Vega-Lite -->
-    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <title>Week 9 - Homework Task - Death Rates Over the World</title>
+  <!-- Vega & Vega-Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<!-- Navbar -->
+
 <nav>
-    <h1>Death Rate Map</h1>
-    <h2>Eyad El Hajj - 33180830 - Lab03 - Karan R.</h2>
+  <h1>Death Rate Map</h1>
+  <h2>Eyad El Hajj - 33180830 - Lab03 - Karan R.</h2>
 </nav>
 
-<!-- Vega-Lite container -->
 <main>
-    <div id="vis"></div>
+  <div id="vis"></div>
 </main>
 
 <script>
-    const spec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-        "width": 800,
-        "height": 400,
+  const spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "width": 800,
+    "height": 400,
+    "projection": { "type": "equirectangular" },
+    "layer": [
+      {
         "data": {
-            "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
-            "format": { "type": "topojson", "feature": "countries" }
+          "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json",
+          "format": { "type": "topojson", "feature": "land" }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "#eeeeee"
+        },
+        "encoding": {},
+        "transform": [],
+        "params": [],
+        "selection": {},
+        "name": "land-bg"
+      },
+      {
+        "data": {
+          "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+          "format": { "type": "topojson", "feature": "countries" }
         },
         "transform": [
-            {
-                "calculate": "datum.properties.name === 'Russia' ? 'Russian Federation' : datum.properties.name === 'Syria' ? 'Syrian Arab Republic' : datum.properties.name === 'Czechia' ? 'Czech Republic' : datum.properties.name === 'S. Sudan' ? 'South Sudan' : datum.properties.name === 'Dem. Rep. Congo' ? 'Democratic Republic of the Congo' : datum.properties.name === 'South Korea' ? 'Republic of Korea' : datum.properties.name === 'North Korea' ? 'Democratic People\\'s Republic of Korea' : datum.properties.name === 'Cape Verde' ? 'Cabo Verde' : datum.properties.name === 'Laos' ? 'Lao People\\'s Democratic Republic' : datum.properties.name === 'Czech Republic' ? 'Czechia' : datum.properties.name === 'Moldova' ? 'Republic of Moldova' : datum.properties.name === 'Tanzania' ? 'United Republic of Tanzania' : datum.properties.name === 'Bolivia' ? 'Bolivia (Plurinational State of)' : datum.properties.name === 'Brunei' ? 'Brunei Darussalam' : datum.properties.name === 'Timor-Leste' ? 'Timor-Leste' : datum.properties.name === 'Micronesia' ? 'Micronesia (Federated States of)' : datum.properties.name === 'Palestine' ? 'State of Palestine' : datum.properties.name === 'Macedonia' ? 'North Macedonia' : datum.properties.name === 'Venezuela' ? 'Venezuela (Bolivarian Republic of)' : datum.properties.name === 'Central African Rep.' ? 'Central African Republic' : datum.properties.name === 'Iran' ? 'Iran (Islamic Republic of)' : datum.properties.name === 'Turkey' ? 'Türkiye' : datum.properties.name === 'The Bahamas' ? 'Bahamas' : datum.properties.name === 'eSwatini' ? 'Eswatini' : datum.properties.name === 'Slovak Republic' ? 'Slovakia' : datum.properties.name === 'Saint Kitts and Nevis' ? 'Saint Kitts and Nevis' : datum.properties.name === 'Vietnam' ? 'Viet Nam' : datum.properties.name === 'Côte d\\'Ivoire' ? 'Côte d\\'Ivoire' : datum.properties.name === 'Côte d’Ivoire' ? 'Côte d\\'Ivoire' : datum.properties.name === 'Ivory Coast' ? 'Côte d\\'Ivoire' : datum.properties.name",
-                "as": "lookup_name"
-            },
-            {
-                "lookup": "lookup_name",
-                "from": {
-                    "data": {
-                        "url": "https://raw.githubusercontent.com/eyadhajj/Week-9-Homework-Task/refs/heads/main/IHME-GBD_2021_DATA-6b23a41d-1.csv"
-                    },
-                    "key": "location_name",
-                    "fields": ["val"]
-                }
+          { "calculate": "datum.properties && datum.properties.name ? datum.properties.name : null", "as": "country" },
+          {
+            "calculate": "datum.country === 'Russia' ? 'Russian Federation' : datum.country === 'Syria' ? 'Syrian Arab Republic' : datum.country === 'Czechia' ? 'Czech Republic' : datum.country === 'S. Sudan' ? 'South Sudan' : datum.country === 'Dem. Rep. Congo' ? 'Democratic Republic of the Congo' : datum.country === 'South Korea' ? 'Republic of Korea' : datum.country === 'North Korea' ? 'Democratic People\\'s Republic of Korea' : datum.country === 'Cape Verde' ? 'Cabo Verde' : datum.country === 'Laos' ? 'Lao People\\'s Democratic Republic' : datum.country === 'Czech Republic' ? 'Czechia' : datum.country === 'Moldova' ? 'Republic of Moldova' : datum.country === 'Tanzania' ? 'United Republic of Tanzania' : datum.country === 'Bolivia' ? 'Bolivia (Plurinational State of)' : datum.country === 'Brunei' ? 'Brunei Darussalam' : datum.country === 'Timor-Leste' ? 'Timor-Leste' : datum.country === 'Micronesia' ? 'Micronesia (Federated States of)' : datum.country === 'Palestine' ? 'State of Palestine' : datum.country === 'Macedonia' ? 'North Macedonia' : datum.country === 'Venezuela' ? 'Venezuela (Bolivarian Republic of)' : datum.country === 'Central African Rep.' ? 'Central African Republic' : datum.country === 'Iran' ? 'Iran (Islamic Republic of)' : datum.country === 'Turkey' ? 'Türkiye' : datum.country === 'The Bahamas' ? 'Bahamas' : datum.country === 'Gambia' ? 'Gambia' : datum.country === 'The Gambia' ? 'Gambia' : datum.country === 'eSwatini' ? 'Eswatini' : datum.country === 'Slovak Republic' ? 'Slovakia' : datum.country === 'Vietnam' ? 'Viet Nam' : datum.country === 'Côte d\\'Ivoire' ? 'Côte d\\'Ivoire' : datum.country === 'Côte d’Ivoire' ? 'Côte d\\'Ivoire' : datum.country === 'Ivory Coast' ? 'Côte d\\'Ivoire' : datum.country",
+            "as": "lookup_name"
+          },
+          {
+            "lookup": "lookup_name",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/eyadhajj/Week-9-Homework-Task/main/IHME-GBD_2021_DATA-6b23a41d-1.csv"
+              },
+              "key": "location_name",
+              "fields": ["val"]
             }
+          }
         ],
-        "projection": { "type": "equirectangular" },
-        "mark": "geoshape",
+        "mark": { "type": "geoshape", "stroke": "black", "strokeWidth": 2 },
         "encoding": {
-            "color": {
-                "field": "val",
-                "type": "quantitative",
-                "scale": { "scheme": "reds", "unknown": "#d3d3d3" },
-                "legend": { "title": "Death Rate" }
-            },
-            "tooltip": [
-                { "field": "properties.name", "title": "Country" },
-                { "field": "val", "type": "quantitative", "title": "Rate of Death" }
-            ]
+          "color": {
+            "field": "val",
+            "type": "quantitative",
+            "scale": { "scheme": "reds", "unknown": "#d3d3d3" },
+            "legend": { "title": "Death Rate" }
+          },
+          "tooltip": [
+            { "field": "country", "title": "Country" },
+            { "field": "val", "type": "quantitative", "title": "Rate of Death" }
+          ]
         }
-    };
+      }
+    ]
+  };
 
-    vegaEmbed('#vis', spec);
+  vegaEmbed('#vis', spec);
 </script>
+
+<div>
+  <h2 class="text-center">Death Rates Over the World</h2>
+  <h4 class="text-center">A choropleth map showing death rates accross the world.</h4>
+  <p class="text-center">Datasource: https://vizhub.healthdata.org/gbd-results/</p>
+</div>
 
 <div class="container">
   <div class="row text-center">
-    
-    <div class="col-md-3">
+
+    <div class="col-md-3 shadow">
       <div class="card h-100">
         <div class="card-body">
           <h2>Domain</h2>
-          <p>This visualization shows the death rates across different countries in the world,
-            highlighting the disparities and trends in health outcomes.</p>
+          <p>
+            The visualization is used to show the varying death rates amongst countries around the world. This prompts
+            the audience to think about different regions with high/low death rates and factors that may be involved.
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 shadow">
       <div class="card h-100">
         <div class="card-body">
           <h2>Dataset Information</h2>
-          <p>The dataset used in this visualization is sourced from the Institute for Health
-            Metrics and Evaluation (IHME) Global Burden of Disease (GBD) Study 2021. It provides
-            comprehensive data on death rates by country, which is crucial for understanding
-            global health patterns.</p>
+          <p>
+            The dataset given was a collection of how extreme mortality rates were in different countries due to
+            disease. This is used to show the distribution of death rates accross countries may highlight different
+            circumstances.
+            The dataset contains information that is vital for the visualization and future analysis, such as Location
+            Name, Year, Deaths, and metrics related (number, rate and percentage).
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 shadow">
       <div class="card h-100">
         <div class="card-body">
           <h2>Dataset Transformations</h2>
-          <p>Several transformations were applied to the dataset to ensure accurate mapping and
-            representation. These include renaming certain countries to match the naming
-            conventions used in the geographical data, as well as filtering and aggregating data
-            to focus on relevant metrics.</p>
+          <p>
+            The dataset only had a few transformations applied to it. Some of the countries needed to have their name
+            changed to match the names in Vega-Lite's geographical data.
+            Furthermore, the dataset needed to be mapped inside of Vega-Lite to be used in the visualization. An example
+            of this Russian Federation was mapped to Russia.
+
+            <br />
+            A decleration that the use of AI was used to automate and speed up the process of mapping countries and
+            changing them for Vega-Lite. The use of AI was also used to help adjust the tooltip with the topojson data to visualise country borders. 
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 shadow">
       <div class="card h-100">
         <div class="card-body">
           <h2>Idiom Justification</h2>
+          <p>
+            The map visualisation that I used is known as a choropleth map. This allows me to differentiate the
+            different death rates around the world, showing heavy highlights for areas that are more affected.
+
+            Moreover, using a red colour gives the audience a sense of seveerity, as it is universilly understood as a
+            negatice, dangerous colour. The use of luminance help show severity of death rates, showing lighter red
+            means the country is less affected, whereas darker red means the country is more affected.
         </div>
       </div>
     </div>
